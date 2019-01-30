@@ -1,0 +1,88 @@
+---
+title: "preprocess"
+author: "markrobinsonuzh"
+date: "2019-01-28"
+output: workflowr::wflow_html
+editor_options: 
+  chunk_output_type: console
+---
+
+## Introduction
+
+Before any of this, you will need to download the processed data from GEO at accession [GSE96583](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583). The file `GSE96583_RAW.tar` was unwrapped into the `GSE96583_RAW` folder and then files in there were moved to the `/data/` folder of the workflow here. The files `GSE96583_batch2.genes.tsv.gz` and `GSE96583_batch2.total.tsne.df.tsv.gz` were also individually downloaded and placed in the `/data/` directory.
+
+Assuming you have the Unix tool `tree` installed, you should have the following set of files in the `data` directory (although only those specified below are strictly needed):
+
+```{r}
+twee <- system("tree data", intern = TRUE)
+cat(paste(twee, collapse = "\n"))
+```
+
+## Load packages
+
+```{r}
+# load packages
+suppressPackageStartupMessages({
+    library(dplyr)
+    library(SingleCellExperiment)
+})
+```
+
+## Load data into Bioconductor objects
+
+```{r}
+# load data
+rd <- read.table("data/GSE96583_batch2.genes.tsv.gz", 
+                 sep="\t", header=FALSE, stringsAsFactors=FALSE,
+                 row.names=1, col.names=c("", "feature"))
+rd$gene_id <- rownames(rd)
+rd$symbol <- rd$feature
+rd$feature <- NULL
+
+cd <- read.table("data/GSE96583_batch2.total.tsne.df.tsv.gz", 
+                 sep="\t", header=TRUE)
+
+mtx <- file.path("data", c("GSM2560248_2.1.mtx.gz",
+                           "GSM2560249_2.2.mtx.gz"))
+x <- lapply(mtx, Matrix::readMM)
+x <- do.call(cbind, x)
+dimnames(x) <- lapply(list(rd, cd), rownames)
+dim(x)
+
+# remove undetected genes
+x <- x[Matrix::rowSums(x > 0) > 0, ]
+rd <- rd[rownames(x), ,drop=FALSE]
+
+rownames(x) <- rownames(rd) <- with(rd, paste0(gene_id, "_", symbol))
+
+# remove multiplets & unassigned cells
+cd <- data.frame(cd, i=seq_len(ncol(x))) %>%
+    filter(multiplets == "singlet", !is.na(cell))
+rownames(cd) <- colnames(x)[cd$i]
+cd <- select(cd, -"i")
+x <- x[, rownames(cd)]
+dim(x)
+
+# construct rowData & colData
+sample_ids <- factor(with(cd, paste0(stim, ind)))
+cd <- data.frame(sample_id = sample_ids,
+                 group_id=cd$stim, cluster_id=cd$cell,
+                 row.names=rownames(cd))
+
+# construct metadata
+m <- match(levels(sample_ids), sample_ids)
+ei <- data.frame(sample_id = levels(sample_ids),
+                 group_id = cd$group_id[m])
+
+# construct SingleCellExperiment
+sce <- SingleCellExperiment(
+    assays = list(counts = x),
+    rowData = rd, colData = cd,
+    metadata = list(experiment_info = ei))
+sce <- scater::normalize(sce)
+
+saveRDS(sce, "output/GSE96583_sce.rds")
+
+# quick summary of assigned cells
+with(colData(sce), table(sample_id, cluster_id))
+```

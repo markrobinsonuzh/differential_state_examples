@@ -1,0 +1,62 @@
+---
+title: "02-diff-state"
+author: "markrobinsonuzh"
+date: "2019-01-28"
+output: workflowr::wflow_html
+editor_options: 
+  chunk_output_type: console
+---
+
+## Load packages
+
+```{r}
+suppressPackageStartupMessages({
+  library(ddSingleCell)
+  library(dplyr)
+  library(SingleCellExperiment)
+  library(limma)
+})
+```
+
+## Load RDS file of `SingleCellExperiment`
+
+```{r}
+sce <- readRDS("output/GSE96583_sce.rds")
+
+# aggregate single-cell to pseudo-bulk counts
+pb <- aggregateData(sce, assay = "counts", 
+                    fun = "sum", scale = FALSE)
+
+# calculate expression frequencies by sample & group
+frq <- calcExprFreqs(sce, assay = "counts", th = 0)
+
+# specfiy design & contrast
+ei <- metadata(sce)$experiment_info
+design <- model.matrix(~ 0 + ei$group_id)
+dimnames(design) <- list(ei$sample_id, levels(ei$group_id))
+contrast <- makeContrasts(contrasts = "stim-ctrl", levels = design)
+
+design
+contrast
+
+# cluster-specifiy DE analysis
+res <- runDS(sce, pb, design, contrast,
+             method = "edgeR", min_cells = 10, verbose = TRUE)
+
+saveRDS(res, "output/GSE96583_diff_state_list.rds")
+saveRDS(pb, "output/GSE96583_pseudobulks.rds")
+
+
+tbl <- resDS(sce, res, bind = "col", 
+             frq = frq, cpm = TRUE, digits = 8) %>%
+  left_join(rowData(sce)  %>% as.data.frame,
+            by = c("gene" = "gene_id"))
+
+saveRDS(tbl, "output/GSE96583_diff_state_table.rds")
+
+head(tbl %>% select(-ends_with("frq")) %>% arrange(FDR))
+
+write.csv(tbl, "output/GSE96583_diff_state_table.csv",
+          row.names = FALSE, quote=FALSE)
+```
+

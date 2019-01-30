@@ -1,0 +1,73 @@
+---
+title: "03-diff-state-visualizations"
+author: "markrobinsonuzh"
+date: "2019-01-30"
+output: workflowr::wflow_html
+editor_options: 
+  chunk_output_type: console
+---
+
+## Load packages
+
+```{r}
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(SingleCellExperiment)
+  library(scater)
+  library(edgeR)
+})
+```
+
+
+## Load back in data and results
+
+```{r}
+sce <- readRDS("output/GSE96583_sce.rds")
+tbl <- readRDS("output/GSE96583_diff_state_table.rds")
+
+tbl <- tbl %>% dplyr::arrange(FDR)
+
+pb <- readRDS("output/GSE96583_pseudobulks.rds")
+```
+
+
+## Top cell-type-specific DE changes
+
+```{r fig.width=12, fig.height=6}
+
+tbls <- lapply(split(tbl, tbl$cluster_id), head, 6)
+
+ps <- lapply(tbls, function(u) {
+  plotExpression(sce[,colData(sce)$cluster_id==u$cluster_id[1]],
+                 features=u$gene,
+                 x="sample_id", colour_by = "group_id",
+                 ncol=3) +
+    ggtitle(u$cluster_id[1])
+})
+
+lapply(ps, print)
+```
+
+
+## Pseudo-bulk level MDS plot
+
+```{r fig.width=8, fig.height=8}
+pb_matrix <- do.call(cbind, pb)
+ocn <- colnames(pb_matrix)
+nc <- sapply(pb, ncol)
+colnames(pb_matrix) <- paste0(rep(names(nc), nc), "__", ocn)
+
+d <- DGEList(pb_matrix)
+d <- calcNormFactors(d)
+d <- d[rowSums(cpm(d)>1)>=8,]
+
+mds <- edgeR::plotMDS.DGEList(d, plot=FALSE)
+
+df <- data.frame(MDS1=mds$x, MDS2=mds$y, celltype=rep(names(nc),nc),
+                 names=ocn, group=substr(ocn,1,4))
+
+ggplot(df, aes(x=MDS1, y=MDS2, shape=group, colour=celltype)) +
+  geom_point(size=5, alpha=.8)
+```
+
+
