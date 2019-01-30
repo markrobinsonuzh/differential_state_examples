@@ -425,7 +425,7 @@ div.section {
 <ul>
 <li>
 <details>
-<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
@@ -448,7 +448,7 @@ div.section {
 </li>
 <li>
 <details>
-<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/markrobinsonuzh/differential_state_examples/tree/afc458c54e9b4845ed59be61c916767b5870fadb" target="_blank">afc458c</a> </summary></p>
+<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/markrobinsonuzh/differential_state_examples/tree/46d5c2d5d9a1c652c6ea2adf46615149322150bc" target="_blank">46d5c2d</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -456,6 +456,7 @@ Ignored files:
     Ignored:    chimera_tal1_differential_state/.Rhistory
     Ignored:    chimera_tal1_differential_state/.Rproj.user/
     Ignored:    demuxlet_differential_state/.DS_Store
+    Ignored:    demuxlet_differential_state/.Rhistory
     Ignored:    demuxlet_differential_state/.Rproj.user/
 
 Untracked files:
@@ -468,10 +469,6 @@ Untracked files:
     Untracked:  chimera_tal1_differential_state/data/meta.tab
     Untracked:  chimera_tal1_differential_state/data/raw_counts.mtx
     Untracked:  chimera_tal1_differential_state/data/sizefactors.tab
-    Untracked:  demuxlet_differential_state/analysis/01-preprocess.Rmd
-    Untracked:  demuxlet_differential_state/analysis/02-diff-state.Rmd
-    Untracked:  demuxlet_differential_state/analysis/03-diff-state-visualizations.Rmd
-    Untracked:  demuxlet_differential_state/analysis/04-diff-state-genesets.Rmd
     Untracked:  demuxlet_differential_state/data/GSE96583_batch1.genes.tsv.gz
     Untracked:  demuxlet_differential_state/data/GSE96583_batch1.total.tsne.df.tsv.gz
     Untracked:  demuxlet_differential_state/data/GSE96583_batch2.genes.tsv.gz
@@ -487,17 +484,270 @@ Untracked files:
     Untracked:  demuxlet_differential_state/data/GSM2560248_barcodes.tsv.gz
     Untracked:  demuxlet_differential_state/data/GSM2560249_2.2.mtx.gz
     Untracked:  demuxlet_differential_state/data/GSM2560249_barcodes.tsv.gz
+    Untracked:  demuxlet_differential_state/docs/figure/
     Untracked:  demuxlet_differential_state/output/GSE96583_diff_state_list.rds
+    Untracked:  demuxlet_differential_state/output/GSE96583_diff_state_table.csv
+    Untracked:  demuxlet_differential_state/output/GSE96583_diff_state_table.rds
+    Untracked:  demuxlet_differential_state/output/GSE96583_geneset_data.rds
+    Untracked:  demuxlet_differential_state/output/GSE96583_geneset_results.rds
+    Untracked:  demuxlet_differential_state/output/GSE96583_geneset_results_FDR_5perc.csv
+    Untracked:  demuxlet_differential_state/output/GSE96583_pseudobulks.rds
     Untracked:  demuxlet_differential_state/output/GSE96583_sce.rds
+
+Unstaged changes:
+    Modified:   demuxlet_differential_state/analysis/03-diff-state-visualizations.Rmd
+    Modified:   demuxlet_differential_state/analysis/04-diff-state-genesets.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </details>
 </li>
 </ul>
+<details>
+<summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/markrobinsonuzh/differential_state_examples/blob/5dbabcfb6fc8a81d3a478f43ec92b0cbb626e53e/demuxlet_differential_state/analysis/04-diff-state-genesets.Rmd" target="_blank">5dbabcf</a>
+</td>
+<td style="text-align:left;">
+markrobinsonuzh
+</td>
+<td style="text-align:left;">
+2019-01-30
+</td>
+<td style="text-align:left;">
+3/4 of way to demuxlet DS analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/markrobinsonuzh/differential_state_examples/5dbabcfb6fc8a81d3a478f43ec92b0cbb626e53e/demuxlet_differential_state/docs/04-diff-state-genesets.html" target="_blank">5dbabcf</a>
+</td>
+<td style="text-align:left;">
+markrobinsonuzh
+</td>
+<td style="text-align:left;">
+2019-01-30
+</td>
+<td style="text-align:left;">
+3/4 of way to demuxlet DS analysis
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+</details>
 <hr />
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<div id="load-packages" class="section level3">
+<h3>load packages</h3>
+<pre class="r"><code>suppressPackageStartupMessages({
+  library(limma)
+  library(msigdbr)
+  library(dplyr)
+  library(reshape2)
+  library(SingleCellExperiment)
+  library(pheatmap)
+})</code></pre>
+</div>
+<div id="load-data-metadata" class="section level3">
+<h3>load data &amp; metadata</h3>
+<pre class="r"><code>sce &lt;- readRDS(&quot;output/GSE96583_sce.rds&quot;)
+res &lt;- readRDS(&quot;output/GSE96583_diff_state_list.rds&quot;)
+data &lt;- res$data
+
+ei &lt;- metadata(sce)$experiment_info
+rm(sce); gc()</code></pre>
+<pre><code>           used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells  4810290 256.9    8240104 440.1         NA  5182194 276.8
+Vcells 11315061  86.4   51035944 389.4      16384 54351294 414.7</code></pre>
+<pre class="r"><code>design &lt;- model.matrix(~ 0 + ei$group)
+rownames(design) &lt;- ei$sample_id
+colnames(design) &lt;- levels(ei$group)
+
+contrast &lt;- makeContrasts(&quot;stim-ctrl&quot;, levels = colnames(design))
+
+design</code></pre>
+<pre><code>         ctrl stim
+ctrl101     1    0
+ctrl1015    1    0
+ctrl1016    1    0
+ctrl1039    1    0
+ctrl107     1    0
+ctrl1244    1    0
+ctrl1256    1    0
+ctrl1488    1    0
+stim101     0    1
+stim1015    0    1
+stim1016    0    1
+stim1039    0    1
+stim107     0    1
+stim1244    0    1
+stim1256    0    1
+stim1488    0    1
+attr(,&quot;assign&quot;)
+[1] 1 1
+attr(,&quot;contrasts&quot;)
+attr(,&quot;contrasts&quot;)$`ei$group`
+[1] &quot;contr.treatment&quot;</code></pre>
+<pre class="r"><code>contrast</code></pre>
+<pre><code>      Contrasts
+Levels stim-ctrl
+  ctrl        -1
+  stim         1</code></pre>
+</div>
+<div id="organize-gene-sets-and-gene-names" class="section level3">
+<h3>organize gene sets and gene names</h3>
+<pre class="r"><code>m_df = msigdbr(species = &quot;Homo sapiens&quot;) %&gt;%
+  filter(gs_cat %in% c(&quot;H&quot;, &quot;C5&quot;))
+
+# add $genes element
+data &lt;- lapply(data, function(u) {
+  ss &lt;- strsplit(rownames(u), &quot;_&quot;, fixed=TRUE)
+  u$genes &lt;- data.frame(ensembl_id=sapply(ss, .subset, 1), 
+                           symbol=sapply(ss, .subset, 2))
+  u
+})</code></pre>
+<pre><code>Loading required package: edgeR</code></pre>
+<pre><code>
+Attaching package: &#39;edgeR&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:SingleCellExperiment&#39;:
+
+    cpm</code></pre>
+<pre class="r"><code># sapply(data, function(u) {
+#   table(toupper(u$genes$symbol) %in% m_df$human_gene_symbol)
+# })
+
+# bit better matching with these ones
+sapply(data, function(u) {
+  table(u$genes$symbol %in% m_df$gene_symbol)
+})</code></pre>
+<pre><code>      B cells CD14+ Monocytes CD4 T cells CD8 T cells Dendritic cells
+FALSE    3377            3879        4494        2923            2339
+TRUE    10398           10941       11226        9961            9566
+      FCGR3A+ Monocytes Megakaryocytes NK cells
+FALSE              3061           1597     2950
+TRUE              10231           8139     9969</code></pre>
+<pre class="r"><code>sets &lt;- split(m_df$gene_symbol, m_df$gs_name)
+n &lt;- sapply(sets, length)
+sets &lt;- sets[n &gt;= 20 &amp; n &lt; 1000]
+length(sets)</code></pre>
+<pre><code>[1] 4107</code></pre>
+</div>
+<div id="run-camera-on-each-contrastcluster" class="section level3">
+<h3>run <code>camera</code> on each contrast/cluster</h3>
+<pre class="r"><code>gs_data &lt;- mapply(function(uu, vv) {
+  cat(&quot;Preparing cluster&quot;, vv, &quot;..\n&quot;)
+  inds &lt;- ids2indices(sets, uu$genes$symbol, remove.empty=TRUE)
+
+  mm &lt;- design[colnames(uu),]
+  v &lt;- voom(uu, mm)
+  
+  f &lt;- lmFit(v, mm)
+  f &lt;- eBayes(f)
+  cf &lt;- contrasts.fit(f, contrast)
+  cf &lt;- eBayes(cf)
+  
+  list(indices=inds, voom=v, design=mm, cluster=vv,
+       contrasts.fit=cf)
+}, data, names(data), SIMPLIFY = FALSE)</code></pre>
+<pre><code>Preparing cluster B cells ..
+Preparing cluster CD14+ Monocytes ..
+Preparing cluster CD4 T cells ..
+Preparing cluster CD8 T cells ..
+Preparing cluster Dendritic cells ..
+Preparing cluster FCGR3A+ Monocytes ..
+Preparing cluster Megakaryocytes ..
+Preparing cluster NK cells ..</code></pre>
+<pre class="r"><code>gs_res &lt;- lapply(gs_data, function(u) {
+  cat(&quot;Running geneset analysis for cluster&quot;, u$cluster, &quot;..\n&quot;)
+  cams &lt;- lapply(colnames(contrast), function(v) {
+    camera(u$voom, u$indices, design=u$design,
+           contrast=contrast[,v]) %&gt;%
+      rownames_to_column(&quot;geneset&quot;) %&gt;% 
+      mutate(cluster=u$cluster) %&gt;%
+      mutate(contrast=v)
+  })
+  bind_rows(cams)
+})</code></pre>
+<pre><code>Running geneset analysis for cluster B cells ..
+Running geneset analysis for cluster CD14+ Monocytes ..
+Running geneset analysis for cluster CD4 T cells ..
+Running geneset analysis for cluster CD8 T cells ..
+Running geneset analysis for cluster Dendritic cells ..
+Running geneset analysis for cluster FCGR3A+ Monocytes ..
+Running geneset analysis for cluster Megakaryocytes ..
+Running geneset analysis for cluster NK cells ..</code></pre>
+<pre class="r"><code>gs_df &lt;- bind_rows(gs_res)</code></pre>
+</div>
+<div id="heatmap-summary-stim-ctrl" class="section level3">
+<h3>Heatmap summary (stim-ctrl)</h3>
+<pre class="r"><code>cats &lt;- gs_df %&gt;% 
+  filter(contrast==&quot;stim-ctrl&quot;, FDR &lt; 1e-10) %&gt;%
+  pull(geneset) %&gt;% unique()
+
+length(cats)</code></pre>
+<pre><code>[1] 43</code></pre>
+<pre class="r"><code>tab &lt;- gs_df %&gt;% 
+  filter(contrast==&quot;stim-ctrl&quot;, geneset %in% cats) %&gt;%
+  select(geneset, cluster, FDR) %&gt;%
+  mutate(neg_log10_fdr = -log10(FDR))
+
+mat &lt;- acast(tab, cluster ~ geneset, value.var = &quot;neg_log10_fdr&quot;)
+colnames(mat) &lt;- strtrim(colnames(mat), 25)
+
+pheatmap(mat)</code></pre>
+<p><img src="figure/04-diff-state-genesets.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="example-barcodeplot" class="section level3">
+<h3>example <code>barcodeplot</code></h3>
+<pre class="r"><code># HALLMARK_INTERFERON_ALPHA_RESPONSE barcodeplot
+for(cl in c(&quot;NK cells&quot;,&quot;Dendritic cells&quot;,&quot;CD14+ Monocytes&quot;)) {
+  tstat &lt;- gs_data[[cl]]$contrasts.fit$t[,&quot;stim-ctrl&quot;]
+  inds &lt;- gs_data[[cl]]$indices[[&quot;HALLMARK_INTERFERON_ALPHA_RESPONSE&quot;]]
+
+  barcodeplot(tstat, index = inds, cex.main=.8,
+            quantiles=c(-1,1)*qt(.95, df=14),
+            main=paste0(&quot;Cluster: &quot;, cl, 
+                        &quot; -- HALLMARK_INTERFERON_ALPHA_RESPONSE&quot;))
+}</code></pre>
+<p><img src="figure/04-diff-state-genesets.Rmd/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /><img src="figure/04-diff-state-genesets.Rmd/unnamed-chunk-6-2.png" width="768" style="display: block; margin: auto;" /><img src="figure/04-diff-state-genesets.Rmd/unnamed-chunk-6-3.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="write-out-rds-and-csv" class="section level3">
+<h3>write out RDS and CSV</h3>
+<pre class="r"><code>saveRDS(gs_df, &quot;output/GSE96583_geneset_results.rds&quot;)  
+saveRDS(gs_data, &quot;output/GSE96583_geneset_data.rds&quot;)  
+
+write.csv(gs_df %&gt;% filter(FDR &lt; .05),
+          file = &quot;output/GSE96583_geneset_results_FDR_5perc.csv&quot;,
+          quote = FALSE, row.names = FALSE)</code></pre>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
@@ -514,16 +764,38 @@ locale:
 [1] C
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] edgeR_3.24.3                bindrcpp_0.2.2             
+ [3] pheatmap_1.0.12             SingleCellExperiment_1.4.1 
+ [5] SummarizedExperiment_1.12.0 DelayedArray_0.8.0         
+ [7] BiocParallel_1.16.5         matrixStats_0.54.0         
+ [9] Biobase_2.42.0              GenomicRanges_1.34.0       
+[11] GenomeInfoDb_1.18.1         IRanges_2.16.0             
+[13] S4Vectors_0.20.1            BiocGenerics_0.28.0        
+[15] reshape2_1.4.3              msigdbr_6.2.1              
+[17] tibble_2.0.1                dplyr_0.7.8                
+[19] limma_3.38.3               
 
 loaded via a namespace (and not attached):
- [1] workflowr_1.1.1   Rcpp_1.0.0        rprojroot_1.3-2  
- [4] digest_0.6.18     R.methodsS3_1.7.1 backports_1.1.3  
- [7] git2r_0.24.0      magrittr_1.5      evaluate_0.12    
-[10] stringi_1.2.4     whisker_0.3-2     R.oo_1.22.0      
-[13] R.utils_2.7.0     rmarkdown_1.11    tools_3.5.2      
-[16] stringr_1.3.1     xfun_0.4          yaml_2.2.0       
-[19] compiler_3.5.2    htmltools_0.3.6   knitr_1.21       </code></pre>
+ [1] locfit_1.5-9.1         tidyselect_0.2.5       xfun_0.4              
+ [4] purrr_0.2.5            lattice_0.20-38        colorspace_1.4-0      
+ [7] htmltools_0.3.6        yaml_2.2.0             rlang_0.3.1           
+[10] R.oo_1.22.0            pillar_1.3.1           glue_1.3.0            
+[13] R.utils_2.7.0          RColorBrewer_1.1-2     GenomeInfoDbData_1.2.0
+[16] bindr_0.1.1            plyr_1.8.4             stringr_1.3.1         
+[19] zlibbioc_1.28.0        munsell_0.5.0          gtable_0.2.0          
+[22] workflowr_1.1.1        R.methodsS3_1.7.1      evaluate_0.12         
+[25] knitr_1.21             Rcpp_1.0.0             backports_1.1.3       
+[28] scales_1.0.0           XVector_0.22.0         digest_0.6.18         
+[31] stringi_1.2.4          rprojroot_1.3-2        grid_3.5.2            
+[34] tools_3.5.2            bitops_1.0-6           magrittr_1.5          
+[37] RCurl_1.95-4.11        crayon_1.3.4           whisker_0.3-2         
+[40] pkgconfig_2.0.2        Matrix_1.2-15          assertthat_0.2.0      
+[43] rmarkdown_1.11         R6_2.3.0               git2r_0.24.0          
+[46] compiler_3.5.2        </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using

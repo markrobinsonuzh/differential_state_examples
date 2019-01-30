@@ -425,7 +425,7 @@ div.section {
 <ul>
 <li>
 <details>
-<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p><summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
@@ -448,7 +448,7 @@ div.section {
 </li>
 <li>
 <details>
-<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/markrobinsonuzh/differential_state_examples/tree/afc458c54e9b4845ed59be61c916767b5870fadb" target="_blank">afc458c</a> </summary></p>
+<p><summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/markrobinsonuzh/differential_state_examples/tree/46d5c2d5d9a1c652c6ea2adf46615149322150bc" target="_blank">46d5c2d</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -458,6 +458,7 @@ Ignored files:
     Ignored:    demuxlet_differential_state/.DS_Store
     Ignored:    demuxlet_differential_state/.Rhistory
     Ignored:    demuxlet_differential_state/.Rproj.user/
+    Ignored:    demuxlet_differential_state/docs/figure/
 
 Untracked files:
     Untracked:  .DS_Store
@@ -469,10 +470,6 @@ Untracked files:
     Untracked:  chimera_tal1_differential_state/data/meta.tab
     Untracked:  chimera_tal1_differential_state/data/raw_counts.mtx
     Untracked:  chimera_tal1_differential_state/data/sizefactors.tab
-    Untracked:  demuxlet_differential_state/analysis/01-preprocess.Rmd
-    Untracked:  demuxlet_differential_state/analysis/02-diff-state.Rmd
-    Untracked:  demuxlet_differential_state/analysis/03-diff-state-visualizations.Rmd
-    Untracked:  demuxlet_differential_state/analysis/04-diff-state-genesets.Rmd
     Untracked:  demuxlet_differential_state/data/GSE96583_batch1.genes.tsv.gz
     Untracked:  demuxlet_differential_state/data/GSE96583_batch1.total.tsne.df.tsv.gz
     Untracked:  demuxlet_differential_state/data/GSE96583_batch2.genes.tsv.gz
@@ -493,13 +490,77 @@ Untracked files:
     Untracked:  demuxlet_differential_state/output/GSE96583_diff_state_table.rds
     Untracked:  demuxlet_differential_state/output/GSE96583_pseudobulks.rds
     Untracked:  demuxlet_differential_state/output/GSE96583_sce.rds
-    Untracked:  demuxlet_differential_state/output/MAGL_mouse-res-tidy.csv
+
+Unstaged changes:
+    Modified:   demuxlet_differential_state/analysis/03-diff-state-visualizations.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </details>
 </li>
 </ul>
+<details>
+<summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/markrobinsonuzh/differential_state_examples/blob/5dbabcfb6fc8a81d3a478f43ec92b0cbb626e53e/demuxlet_differential_state/analysis/03-diff-state-visualizations.Rmd" target="_blank">5dbabcf</a>
+</td>
+<td style="text-align:left;">
+markrobinsonuzh
+</td>
+<td style="text-align:left;">
+2019-01-30
+</td>
+<td style="text-align:left;">
+3/4 of way to demuxlet DS analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/markrobinsonuzh/differential_state_examples/5dbabcfb6fc8a81d3a478f43ec92b0cbb626e53e/demuxlet_differential_state/docs/03-diff-state-visualizations.html" target="_blank">5dbabcf</a>
+</td>
+<td style="text-align:left;">
+markrobinsonuzh
+</td>
+<td style="text-align:left;">
+2019-01-30
+</td>
+<td style="text-align:left;">
+3/4 of way to demuxlet DS analysis
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+</details>
 <hr />
 <div id="load-packages" class="section level2">
 <h2>Load packages</h2>
@@ -528,7 +589,8 @@ ps &lt;- lapply(tbls, function(u) {
                  features=u$gene,
                  x=&quot;sample_id&quot;, colour_by = &quot;group_id&quot;,
                  ncol=3) +
-    ggtitle(u$cluster_id[1])
+    ggtitle(u$cluster_id[1]) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
 
 lapply(ps, print)</code></pre>

@@ -42,7 +42,8 @@ ps <- lapply(tbls, function(u) {
                  features=u$gene,
                  x="sample_id", colour_by = "group_id",
                  ncol=3) +
-    ggtitle(u$cluster_id[1])
+    ggtitle(u$cluster_id[1]) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
 
 lapply(ps, print)

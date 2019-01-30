@@ -3,11 +3,146 @@ title: "04-diff-state-genesets"
 author: "markrobinsonuzh"
 date: "2019-01-30"
 output: workflowr::wflow_html
+editor_options: 
+  chunk_output_type: console
 ---
 
-## Introduction
-
+### load packages
 ```{r}
+suppressPackageStartupMessages({
+  library(limma)
+  library(msigdbr)
+  library(dplyr)
+  library(reshape2)
+  library(SingleCellExperiment)
+  library(pheatmap)
+})
+```
 
+### load data & metadata
+```{r}
+sce <- readRDS("output/GSE96583_sce.rds")
+res <- readRDS("output/GSE96583_diff_state_list.rds")
+data <- res$data
+
+ei <- metadata(sce)$experiment_info
+rm(sce); gc()
+
+design <- model.matrix(~ 0 + ei$group)
+rownames(design) <- ei$sample_id
+colnames(design) <- levels(ei$group)
+
+contrast <- makeContrasts("stim-ctrl", levels = colnames(design))
+
+design
+contrast
+```
+
+### organize gene sets and gene names
+```{r}
+m_df = msigdbr(species = "Homo sapiens") %>%
+  filter(gs_cat %in% c("H", "C5"))
+
+# add $genes element
+data <- lapply(data, function(u) {
+  ss <- strsplit(rownames(u), "_", fixed=TRUE)
+  u$genes <- data.frame(ensembl_id=sapply(ss, .subset, 1), 
+                           symbol=sapply(ss, .subset, 2))
+  u
+})
+
+# sapply(data, function(u) {
+#   table(toupper(u$genes$symbol) %in% m_df$human_gene_symbol)
+# })
+
+# bit better matching with these ones
+sapply(data, function(u) {
+  table(u$genes$symbol %in% m_df$gene_symbol)
+})
+
+sets <- split(m_df$gene_symbol, m_df$gs_name)
+n <- sapply(sets, length)
+sets <- sets[n >= 20 & n < 1000]
+length(sets)
+```
+
+### run `camera` on each contrast/cluster
+```{r}
+gs_data <- mapply(function(uu, vv) {
+  cat("Preparing cluster", vv, "..\n")
+  inds <- ids2indices(sets, uu$genes$symbol, remove.empty=TRUE)
+
+  mm <- design[colnames(uu),]
+  v <- voom(uu, mm)
+  
+  f <- lmFit(v, mm)
+  f <- eBayes(f)
+  cf <- contrasts.fit(f, contrast)
+  cf <- eBayes(cf)
+  
+  list(indices=inds, voom=v, design=mm, cluster=vv,
+       contrasts.fit=cf)
+}, data, names(data), SIMPLIFY = FALSE)
+
+gs_res <- lapply(gs_data, function(u) {
+  cat("Running geneset analysis for cluster", u$cluster, "..\n")
+  cams <- lapply(colnames(contrast), function(v) {
+    camera(u$voom, u$indices, design=u$design,
+           contrast=contrast[,v]) %>%
+      rownames_to_column("geneset") %>% 
+      mutate(cluster=u$cluster) %>%
+      mutate(contrast=v)
+  })
+  bind_rows(cams)
+})
+
+gs_df <- bind_rows(gs_res)
+```
+
+### Heatmap summary (stim-ctrl)
+
+```{r fig.width = 12, fig.height = 8}
+cats <- gs_df %>% 
+  filter(contrast=="stim-ctrl", FDR < 1e-10) %>%
+  pull(geneset) %>% unique()
+
+length(cats)
+
+tab <- gs_df %>% 
+  filter(contrast=="stim-ctrl", geneset %in% cats) %>%
+  select(geneset, cluster, FDR) %>%
+  mutate(neg_log10_fdr = -log10(FDR))
+
+mat <- acast(tab, cluster ~ geneset, value.var = "neg_log10_fdr")
+colnames(mat) <- strtrim(colnames(mat), 25)
+
+pheatmap(mat)
+```
+
+
+### example `barcodeplot` 
+
+```{r fig.width = 8, fig.height = 4}
+
+# HALLMARK_INTERFERON_ALPHA_RESPONSE barcodeplot
+for(cl in c("NK cells","Dendritic cells","CD14+ Monocytes")) {
+  tstat <- gs_data[[cl]]$contrasts.fit$t[,"stim-ctrl"]
+  inds <- gs_data[[cl]]$indices[["HALLMARK_INTERFERON_ALPHA_RESPONSE"]]
+
+  barcodeplot(tstat, index = inds, cex.main=.8,
+            quantiles=c(-1,1)*qt(.95, df=14),
+            main=paste0("Cluster: ", cl, 
+                        " -- HALLMARK_INTERFERON_ALPHA_RESPONSE"))
+}
+```
+
+### write out RDS and CSV
+```{r}
+saveRDS(gs_df, "output/GSE96583_geneset_results.rds")  
+saveRDS(gs_data, "output/GSE96583_geneset_data.rds")  
+
+write.csv(gs_df %>% filter(FDR < .05),
+          file = "output/GSE96583_geneset_results_FDR_5perc.csv",
+          quote = FALSE, row.names = FALSE)
 ```
 
