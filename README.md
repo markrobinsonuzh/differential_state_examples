@@ -6,4 +6,8 @@ Our baseline approach is to aggregate the cells of a particular type (e.g., afte
 
 This repository gives the codebase for *differential state analyses* of single cell RNA-seq datasets (scRNA-seq), done under the [`workflowr`](https://github.com/jdblischak/workflowr) structure:
 
-- [demuxlet_differential_state](./demuxlet_differential_state)
+1. [demuxlet_differential_state](./demuxlet_differential_state)
+    * [preprocessing](http://htmlpreview.github.io/?https://github.com/markrobinsonuzh/differential_state_examples/blob/master/demuxlet_differential_state/docs/01-preprocess.html)
+    * [differential state analysis (running)](http://htmlpreview.github.io/?https://github.com/markrobinsonuzh/differential_state_examples/blob/master/demuxlet_differential_state/docs/02-diff-state.html)
+    * [differential state analysis (visualizations)](http://htmlpreview.github.io/?https://github.com/markrobinsonuzh/differential_state_examples/blob/master/demuxlet_differential_state/docs/03-diff-state-visualizations.html)
+    * [cell type specific geneset analysis)](http://htmlpreview.github.io/?https://github.com/markrobinsonuzh/differential_state_examples/blob/master/demuxlet_differential_state/docs/04-diff-state-genesets.html)
