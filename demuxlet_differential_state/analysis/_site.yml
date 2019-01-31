@@ -9,6 +9,14 @@ navbar:
       href: about.html
     - text: "License"
       href: license.html
+    - text: "1. Preprocessing"
+      href: 01-preprocess.html
+    - text: "2. Running differential state analysis"
+      href: 02-diff-state.html
+    - text: "3. Differential state analysis visualizations"
+      href: 03-diff-state-visualizations.html
+    - text: "4. Geneset analysis"
+      href: 04-diff-state-genesets.html
   right:
     - icon: fa-github
       href: https://github.com/jdblischak/workflowr
